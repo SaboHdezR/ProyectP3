@@ -1,0 +1,100 @@
+<html>
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content= "width=device-width,initial-scale=1.0">
+<title>Proyecto Parcial 3</title> <!--Cabeza de la pagina-->
+</head>
+
+<body background="./imagenesP/Im1.png"> <!--fondo de pagina-->
+
+<font color="#FFFFFF" face="Comic Sans MS" size=6>
+<p align="center">PROYECTO PARCIAL 3</p>
+</font>
+
+<center>
+<table border="0" cellpadding="20">
+
+<tr><!--Columnas del renglon-->
+<td colspan="2">
+<center>
+<font color="#FFFFFF" style="font-size: 50">
+Sensores
+</font>
+</center>
+</td>
+</tr>
+
+<tr>
+<td><!--Imagen en cada columna-->
+<center>
+<img src="./imagenesP/Im2b.png">
+</center>
+</td>
+<td><!--Imagen en cada columna-->
+<center>
+<img src="./imagenesP/cpc.png">
+</center>
+</td>
+</tr>
+
+<tr>
+<td><!--Imagen en cada columna-->
+<center>
+<font color="#FFFFFF" style="font-size: 20">
+Sensor 1 Potenciometro
+</font>
+</center>
+</td>
+<td><!--Imagen en cada columna-->
+<center>
+<font color="#FFFFFF" style="font-size: 20">
+Sensor 2 Cruce por cero
+</font>
+</center>
+</td>
+</tr>
+
+</table>
+</center>
+
+<font size=4 face="Comic Sans MS" >
+<p style="color:rgb(255, 255, 255);">Valor Sensor1: <span id="Sensor1"></span>.</p>
+<!--<p style="color:rgb(251, 255, 0);">Sensor2: <span id="Estado2"></span>.</p>-->
+</font>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBVYx_7AGKMop90qb-QxUDepnbjhXlUzY4",
+    authDomain: "prac1p2.firebaseapp.com",
+    databaseURL: "https://prac1p2-default-rtdb.firebaseio.com",
+    projectId: "prac1p2",
+    storageBucket: "prac1p2.appspot.com",
+    messagingSenderId: "640805721529",
+    appId: "1:640805721529:web:4cefeca854f9b00b791268",
+    measurementId: "G-42P3MYZC98"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  //const analytics = getAnalytics(app);
+  var Sensor1 = document.getElementById('Sensor1')
+  var dbRef = firebase.database(app)
+  var messRef = dbRef.ref('Sensor1')
+  messRef.once('value').then(function(snap){
+  Sensor1.innerText=snap.val()
+  })
+</script>
+
+</body>
+
+
+</html>
