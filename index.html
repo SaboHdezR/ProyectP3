@@ -86,12 +86,12 @@ Sensor 2 Cruce por cero
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   //const analytics = getAnalytics(app);
-  var Sensor1 = document.getElementById('Sensor1')
-  var dbRef = firebase.database(app)
-  var messRef = dbRef.ref('Sensor1')
+  var Sensor1 = document.getElementById('Sensor1');
+  var dbRef = firebase.database(app);
+  var messRef = dbRef.ref('Sensor1');
   messRef.once('value').then(function(snap){
   Sensor1.innerText=snap.val()
-  })
+  });
 </script>
 
 </body>
