@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content= "width=device-width,initial-scale=1.0">
 <title>Proyecto Parcial 3</title> <!--Cabeza de la pagina-->
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
 </head>
 
 <body background="./imagenesP/Im1.png"> <!--fondo de pagina-->
@@ -59,15 +61,15 @@ Sensor 2 Cruce por cero
 </center>
 
 <font size=4 face="Comic Sans MS" >
-<p id="Sensor1" style="color:rgb(255, 255, 255);">Valor Sensor 1:</p>
-<p id="Sensor2" style="color:rgb(255, 255, 255);">Valor Sensor2:</p>
+<p style="color:rgb(255, 255, 255);">Valor Sensor 1: <span id="Sensor1"></span></p>
+<p style="color:rgb(255, 255, 255);">Valor Sensor2: <span id="Sensor2"></span></p>
 </font>
 
-<script type="module">
+</body>
+
+<script>
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from 'firebase/app';
-  import { getDatabase, ref, onValue} from "firebase/database";
-  const firebaseConfig = {
+  var firebaseConfig = {
     apiKey: "AIzaSyBVYx_7AGKMop90qb-QxUDepnbjhXlUzY4",
     authDomain: "prac1p2.firebaseapp.com",
     databaseURL: "https://prac1p2-default-rtdb.firebaseio.com",
@@ -78,21 +80,18 @@ Sensor 2 Cruce por cero
     measurementId: "G-42P3MYZC98"
   };
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const dbref = ref(db,'/prac1p2-default-rtdb/-Mlqixz7KMDihfi_8ZLS');
-  onValue(dbref, (snapshot) => {
-  snapshot.forEach((childSnapshot) => {
-    const childKey = childSnapshot.key;
-    const childData = childSnapshot.val();
-	const sen1_val = childSnapshot.val().Sensor1;
-	document.getElementById("Sensor1").innerHTML = sen1_val;
+  firebase.initializeApp(firebaseConfig);
+  var database = firebase.database().ref("/prac1p2-default-rtdb").orderByKey();
+  database.on('value', (snapshot) => {
+	snapshot.forEach((childSnapshot) => {
+		var childKey = childSnapshot.key;
+		var childData = childSnapshot.val();
+  var sen1_val = childSnapshot.val().ValorSensor1;
+  var sen2_val = childSnapshot.val().ValorSensor2;
+  document.getElementById("Sensor1").innerHTML = sen1_val;
+  document.getElementById("Sensor2").innerHTML = sen2_val;
   });
-}, {
-  onlyOnce: true
 });
 </script>
-
-</body>
 
 </html>
