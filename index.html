@@ -1,5 +1,5 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content= "width=device-width,initial-scale=1.0">
@@ -18,7 +18,7 @@
 <tr><!--Columnas del renglon-->
 <td colspan="2">
 <center>
-<font color="#FFFFFF" style="font-size: 50">
+<font color="#FFFFFF" style="font-size:50">
 Sensores
 </font>
 </center>
@@ -59,19 +59,14 @@ Sensor 2 Cruce por cero
 </center>
 
 <font size=4 face="Comic Sans MS" >
-<p style="color:rgb(255, 255, 255);">Valor Sensor1: <span id="Sensor1"></span>.</p>
-<!--<p style="color:rgb(251, 255, 0);">Sensor2: <span id="Estado2"></span>.</p>-->
+<p id="Sensor1" style="color:rgb(255, 255, 255);">Valor Sensor 1:</p>
+<p id="Sensor2" style="color:rgb(255, 255, 255);">Valor Sensor2:</p>
 </font>
 
 <script type="module">
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  import { initializeApp } from 'firebase/app';
+  import { getDatabase, ref, onValue} from "firebase/database";
   const firebaseConfig = {
     apiKey: "AIzaSyBVYx_7AGKMop90qb-QxUDepnbjhXlUzY4",
     authDomain: "prac1p2.firebaseapp.com",
@@ -82,19 +77,22 @@ Sensor 2 Cruce por cero
     appId: "1:640805721529:web:4cefeca854f9b00b791268",
     measurementId: "G-42P3MYZC98"
   };
-
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  //const analytics = getAnalytics(app);
-  var Sensor1 = document.getElementById('Sensor1');
-  var dbRef = firebase.database(app);
-  var messRef = dbRef.ref('Sensor1');
-  messRef.once('value').then(function(snap){
-  Sensor1.innerText=snap.val()
+  const db = getDatabase(app);
+  const dbref = ref(db,'/prac1p2-default-rtdb/-Mlqixz7KMDihfi_8ZLS');
+  onValue(dbref, (snapshot) => {
+  snapshot.forEach((childSnapshot) => {
+    const childKey = childSnapshot.key;
+    const childData = childSnapshot.val();
+	const sen1_val = childSnapshot.val().Sensor1;
+	document.getElementById("Sensor1").innerHTML = sen1_val;
   });
+}, {
+  onlyOnce: true
+});
 </script>
 
 </body>
-
 
 </html>
